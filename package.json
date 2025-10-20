@@ -4,14 +4,14 @@
   "description": "AI-powered recipe generator",
   "private": true,
   "scripts": {
-    "install:all": "npm install && cd client && npm install && cd ../server && npm install",
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
-    "dev:server": "cd server && npm run dev",
-    "dev:client": "cd client && npm run dev",
-    "build:client": "cd client && npm run build",
-    "start:server": "cd server && npm start",
-    "clean": "rm -rf node_modules client/node_modules server/node_modules client/dist"
-  },
+  "install": "npm install --prefix client && npm install --prefix server",
+  "build": "npm run build --prefix client",
+  "start": "node server/server.js",
+  "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+  "dev:server": "cd server && npm run dev",
+  "dev:client": "cd client && npm run dev",
+  "clean": "rm -rf node_modules client/node_modules server/node_modules client/dist"
+},
   "keywords": [
     "recipe",
     "ai",
