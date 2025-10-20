@@ -15,7 +15,10 @@ const __dirname = path.dirname(__filename);
 
 // Middleware
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  origin: [
+    process.env.CORS_ORIGIN || 'http://localhost:5173',          // dev
+    'https://fridge-to-feast.vercel.app',                        // Vercel frontend
+  ],
   credentials: true
 }));
 app.use(express.json());
@@ -27,13 +30,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// ✅ Serve frontend build
-app.use(express.static(path.join(__dirname, '../client/dist')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
-});
-
-// Routes
+// ✅ API routes MUST come BEFORE frontend static serving
 app.use('/api', recipeRoutes);
 
 // Health check
@@ -43,6 +40,14 @@ app.get('/health', (req, res) => {
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV 
   });
+});
+
+// Serve frontend build
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+// React router fallback
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 });
 
 // 404 handler
@@ -66,7 +71,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on port ${PORT}`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`✅ CORS enabled for: ${process.env.CORS_ORIGIN || 'http://localhost:3000'}`);
+  console.log(`✅ CORS enabled for: ${process.env.CORS_ORIGIN || 'http://localhost:5173 and Vercel'}`);
 });
 
 export default app;
