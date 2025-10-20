@@ -44,7 +44,7 @@ const IngredientInput = ({ ingredients, setIngredients }) => {
   };
 
   return (
-    <Box sx={{ maxWidth: '1024px', width: '100%', mx: 'auto', px: { xs: 2, sm: 3 } }}>
+    <Box sx={{ maxWidth: '1024px', width: '100%', mx: 'auto', px: { xs: 2, sm: 3 }, marginTop: '-30px' }}>
       {/* Header */}
       <Fade in={animateTitle} timeout={1000}>
         <Box sx={{ textAlign: 'center', mb: { xs: 4, md: 6 } }}>

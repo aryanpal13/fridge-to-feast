@@ -1,69 +1,72 @@
-'use client';
-
 import React from 'react';
-import {
-  Card,
-  CardContent,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
+import { 
+  Card, 
+  CardContent, 
+  FormControl, 
+  InputLabel, 
+  Select, 
+  MenuItem, 
   Button,
   Grow,
-  Fade,
-  Typography,
   Box,
-  Grid,
+  Grid
 } from '@mui/material';
-import { Lightbulb, Sparkles, SlidersHorizontal } from 'lucide-react';
+import { Lightbulb } from 'lucide-react';
 
 const PreferencesForm = ({ preferences, setPreferences, onGenerate, loading, disabled }) => {
   const handleChange = (field) => (event) => {
     setPreferences({
       ...preferences,
-      [field]: event.target.value,
+      [field]: event.target.value
     });
   };
 
-  const selectSx = {
-    borderRadius: 3,
-    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#9333ea',
-      borderWidth: '2px',
-    },
-  };
-
   return (
-    <Box sx={{ maxWidth: '1024px', width: '100%', mx: 'auto', px: { xs: 2, sm: 3 }, mt: 6 }}>
-    
-      {/* Preferences Card */}
-      <Grow in={true} timeout={800}>
-        <Card
-          sx={{
-            borderRadius: 4,
-            bgcolor: 'rgba(255, 255, 255, 0.6)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.1)',
-            transition: 'box-shadow 0.3s ease',
-            '&:hover': {
-              boxShadow: '0 8px 32px 0 rgba(147, 51, 234, 0.2)',
-            },
+    <Box className="w-full max-w-5xl mx-auto px-4 mt-8 inline-flex justify-center">
+      <Grow in={true} timeout={1000}>
+        <Card 
+          className="glass-effect shadow-2xl border border-white/20 hover:shadow-purple-200/50 transition-all duration-300"
+          sx={{ 
+            borderRadius: '24px',
+            marginTop: { xs: 2, md: 4 },
+            overflow: 'visible'
           }}
         >
-          <CardContent sx={{ p: { xs: 3, md: 4 } }}>
-            <Grid container spacing={3} sx={{ mb: 3 }}>
-              {/* Cuisine */}
+          <CardContent sx={{ p: { xs: 3, sm: 4, md: 5 } }}>
+            {/* Preferences Grid */}
+            <Grid container spacing={{ xs: 2.5, sm: 3 }} sx={{ mb: { xs: 3, md: 4 } }}>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel sx={{ '&.Mui-focused': { color: '#9333ea' } }}>Cuisine Type</InputLabel>
+                  <InputLabel 
+                    shrink
+                    sx={{ 
+                      '&.Mui-focused': { color: '#9333ea' },
+                      backgroundColor: 'white',
+                      paddingX: 1,
+                      fontSize: '1rem',
+                    }}
+                  >
+                    Cuisine Type
+                  </InputLabel>
                   <Select
                     value={preferences.cuisine}
                     onChange={handleChange('cuisine')}
-                    label="Cuisine Type"
-                    sx={selectSx}
+                    displayEmpty
+                    sx={{
+                      borderRadius: '12px',
+                      '& .MuiSelect-select': {
+                        paddingY: '16px',
+                        paddingX: '14px',
+                      },
+                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#9333ea',
+                        borderWidth: '2px',
+                      },
+                    }}
                   >
-                    <MenuItem value="">Any</MenuItem>
+                    <MenuItem value="">
+                      <em>Any Cuisine</em>
+                    </MenuItem>
                     <MenuItem value="Italian">🇮🇹 Italian</MenuItem>
                     <MenuItem value="Indian">🇮🇳 Indian</MenuItem>
                     <MenuItem value="Chinese">🇨🇳 Chinese</MenuItem>
@@ -78,17 +81,38 @@ const PreferencesForm = ({ preferences, setPreferences, onGenerate, loading, dis
                 </FormControl>
               </Grid>
 
-              {/* Meal Type */}
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel sx={{ '&.Mui-focused': { color: '#9333ea' } }}>Meal Type</InputLabel>
+                  <InputLabel 
+                    shrink
+                    sx={{ 
+                      '&.Mui-focused': { color: '#9333ea' },
+                      backgroundColor: 'white',
+                      paddingX: 1,
+                      fontSize: '1rem',
+                    }}
+                  >
+                    Meal Type
+                  </InputLabel>
                   <Select
                     value={preferences.mealType}
                     onChange={handleChange('mealType')}
-                    label="Meal Type"
-                    sx={selectSx}
+                    displayEmpty
+                    sx={{
+                      borderRadius: '12px',
+                      '& .MuiSelect-select': {
+                        paddingY: '16px',
+                        paddingX: '14px',
+                      },
+                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#9333ea',
+                        borderWidth: '2px',
+                      },
+                    }}
                   >
-                    <MenuItem value="">Any</MenuItem>
+                    <MenuItem value="">
+                      <em>Any Meal Type</em>
+                    </MenuItem>
                     <MenuItem value="Breakfast">🌅 Breakfast</MenuItem>
                     <MenuItem value="Lunch">☀️ Lunch</MenuItem>
                     <MenuItem value="Dinner">🌙 Dinner</MenuItem>
@@ -99,17 +123,38 @@ const PreferencesForm = ({ preferences, setPreferences, onGenerate, loading, dis
                 </FormControl>
               </Grid>
 
-              {/* Time Limit */}
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel sx={{ '&.Mui-focused': { color: '#9333ea' } }}>Time Limit</InputLabel>
+                  <InputLabel 
+                    shrink
+                    sx={{ 
+                      '&.Mui-focused': { color: '#9333ea' },
+                      backgroundColor: 'white',
+                      paddingX: 1,
+                      fontSize: '1rem',
+                    }}
+                  >
+                    Time Limit
+                  </InputLabel>
                   <Select
                     value={preferences.timeLimit}
                     onChange={handleChange('timeLimit')}
-                    label="Time Limit"
-                    sx={selectSx}
+                    displayEmpty
+                    sx={{
+                      borderRadius: '12px',
+                      '& .MuiSelect-select': {
+                        paddingY: '16px',
+                        paddingX: '14px',
+                      },
+                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#9333ea',
+                        borderWidth: '2px',
+                      },
+                    }}
                   >
-                    <MenuItem value="">No limit</MenuItem>
+                    <MenuItem value="">
+                      <em>No time limit</em>
+                    </MenuItem>
                     <MenuItem value="15">⚡ 15 minutes</MenuItem>
                     <MenuItem value="30">⏱️ 30 minutes</MenuItem>
                     <MenuItem value="45">🕐 45 minutes</MenuItem>
@@ -119,17 +164,38 @@ const PreferencesForm = ({ preferences, setPreferences, onGenerate, loading, dis
                 </FormControl>
               </Grid>
 
-              {/* Dietary */}
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel sx={{ '&.Mui-focused': { color: '#9333ea' } }}>Dietary Preference</InputLabel>
+                  <InputLabel 
+                    shrink
+                    sx={{ 
+                      '&.Mui-focused': { color: '#9333ea' },
+                      backgroundColor: 'white',
+                      paddingX: 1,
+                      fontSize: '1rem',
+                    }}
+                  >
+                    Dietary Preference
+                  </InputLabel>
                   <Select
                     value={preferences.dietary}
                     onChange={handleChange('dietary')}
-                    label="Dietary Preference"
-                    sx={selectSx}
+                    displayEmpty
+                    sx={{
+                      borderRadius: '12px',
+                      '& .MuiSelect-select': {
+                        paddingY: '16px',
+                        paddingX: '14px',
+                      },
+                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#9333ea',
+                        borderWidth: '2px',
+                      },
+                    }}
                   >
-                    <MenuItem value="">None</MenuItem>
+                    <MenuItem value="">
+                      <em>No dietary restrictions</em>
+                    </MenuItem>
                     <MenuItem value="Vegetarian">🥗 Vegetarian</MenuItem>
                     <MenuItem value="Vegan">🌱 Vegan</MenuItem>
                     <MenuItem value="Gluten-Free">🌾 Gluten-Free</MenuItem>
@@ -150,27 +216,29 @@ const PreferencesForm = ({ preferences, setPreferences, onGenerate, loading, dis
               onClick={onGenerate}
               disabled={loading || disabled}
               sx={{
-                height: 56,
-                borderRadius: 3,
+                height: '56px',
+                borderRadius: '12px',
                 fontSize: { xs: '1rem', md: '1.125rem' },
                 fontWeight: 600,
                 background: 'linear-gradient(135deg, #9333ea 0%, #ec4899 50%, #f97316 100%)',
-                transition: 'all 0.3s ease',
                 '&:hover': {
                   background: 'linear-gradient(135deg, #7e22ce 0%, #db2777 50%, #ea580c 100%)',
                   transform: 'translateY(-2px)',
                   boxShadow: '0 12px 24px -8px rgba(147, 51, 234, 0.4)',
                 },
-                '&:active': { transform: 'translateY(0)' },
+                '&:active': {
+                  transform: 'translateY(0)',
+                },
                 '&:disabled': {
                   background: '#e5e7eb',
                   color: '#9ca3af',
                 },
+                transition: 'all 0.3s ease',
               }}
             >
               {loading ? (
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                  <Box
+                  <Box 
                     sx={{
                       width: 20,
                       height: 20,
@@ -178,6 +246,10 @@ const PreferencesForm = ({ preferences, setPreferences, onGenerate, loading, dis
                       borderTopColor: 'transparent',
                       borderRadius: '50%',
                       animation: 'spin 1s linear infinite',
+                      '@keyframes spin': {
+                        '0%': { transform: 'rotate(0deg)' },
+                        '100%': { transform: 'rotate(360deg)' }
+                      }
                     }}
                   />
                   <span>Creating Your Recipe...</span>
@@ -197,10 +269,3 @@ const PreferencesForm = ({ preferences, setPreferences, onGenerate, loading, dis
 };
 
 export default PreferencesForm;
-
-/* Add this to global CSS:
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-*/
