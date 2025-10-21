@@ -1,8 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import recipeRoutes from './routes/recipeRoutes.js';
 
 dotenv.config();
@@ -10,30 +8,24 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 // Middleware
 app.use(cors({
-  origin: [
-    process.env.CORS_ORIGIN || 'http://localhost:5173',          // dev
-    'https://fridge-to-feast.vercel.app',                        // Vercel frontend
-  ],
+  origin: process.env.CORS_ORIGIN || '*',
   credentials: true
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Request logging
+// Request logging middleware
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
   next();
 });
 
-// ✅ API routes MUST come BEFORE frontend static serving
+// Routes
 app.use('/api', recipeRoutes);
 
-// Health check
+// Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ 
     status: 'healthy', 
@@ -42,12 +34,15 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Serve frontend build
-app.use(express.static(path.join(__dirname, '../client/dist')));
-
-// React router fallback
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+// Root endpoint
+app.get('/', (req, res) => {
+  res.status(200).json({ 
+    message: 'Fridge-to-Feast API is running',
+    endpoints: {
+      health: '/health',
+      generateRecipe: 'POST /api/generate-recipe'
+    }
+  });
 });
 
 // 404 handler
@@ -71,7 +66,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on port ${PORT}`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`✅ CORS enabled for: ${process.env.CORS_ORIGIN || 'http://localhost:5173 and Vercel'}`);
+  console.log(`✅ CORS enabled for: ${process.env.CORS_ORIGIN || '*'}`);
 });
 
 export default app;

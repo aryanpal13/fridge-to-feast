@@ -31,11 +31,13 @@ const RecipeGenerator = () => {
     setRecipe(null);
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-const response = await axios.post(`${API_URL}/api/generate-recipe`, {
-  ingredients,
-  ...preferences
-});
+    // Use environment variable or fallback
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    
+    const response = await axios.post(`${API_URL}/api/generate-recipe`, {
+      ingredients,
+      ...preferences
+    });
 
 
       setRecipe(response.data.recipe);
